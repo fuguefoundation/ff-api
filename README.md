@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/fuguefoundation/dapp-nonprofit/blob/master/src/assets/images/logo_150.png">
+</p>
+
 # Stack
 
 * MongoDB (Heroku + mLab)
