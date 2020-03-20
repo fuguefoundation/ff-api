@@ -11,7 +11,7 @@
     "node",
     "restful"
   ],
-  "author": "David Houston",
+  "author": "Fugue Foundation",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",

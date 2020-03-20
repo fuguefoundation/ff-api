@@ -15,7 +15,7 @@ mongoose.connect('mongodb://' + process.env.HEROKU_USERNAME + ':' + process.env.
 );
 
 app.use(morgan('dev'));
-app.use('/uploads', express.static('uploads'));
+//app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
