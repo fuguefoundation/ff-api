@@ -8,8 +8,8 @@ const classifierRoutes = require('./api/routes/classifiers');
 const nonprofitRoutes = require('./api/routes/nonprofits');
 const options = {
     autoIndex: false, // Don't build indexes
-    reconnectTries: 30, // Retry up to 30 times
-    reconnectInterval: 500, // Reconnect every 500ms
+    // reconnectTries: 30, // Retry up to 30 times
+    // reconnectInterval: 500, // Reconnect every 500ms
     poolSize: 10, // Maintain up to 10 socket connections
     // If not connected, return errors immediately rather than waiting for reconnect
     bufferMaxEntries: 0,
@@ -17,10 +17,7 @@ const options = {
     useUnifiedTopology: true
   }
 
-mongoose.connect('mongodb://' + process.env.HEROKU_USERNAME 
-    + ':' + process.env.HEROKU_KEY + '@' 
-    + process.env.MLAB_ADDRESS_PORT + '/' 
-    + process.env.HEROKU_USERNAME,
+mongoose.connect(process.env.MONGODB_URI,
     options).then(() => {
         console.log('MongoDB is connected')
     }).catch(err=>{
@@ -29,7 +26,6 @@ mongoose.connect('mongodb://' + process.env.HEROKU_USERNAME
     });
 
 app.use(morgan('dev'));
-//app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
