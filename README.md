@@ -5,7 +5,7 @@
 ## Quick Start
 
 1. Clone repo and run `npm install`
-2. To run locally, [install MongoDB](https://docs.mongodb.com/manual/installation/). We however are using a Heroku + mLab backend, which provides a `MONGODB_URI`, [check out the docs here]((https://devcenter.heroku.com/articles/mongolab)). We have a a functioning example of this API on Heroku, to which we can add devs/access as necessary. Either way, you will need to add `process.env` environmental variables for use with `app.js`. Create a `nodemon.json` file in the root directory and add variables as key value pairs: `{ env: { "KEY": "VALUE" }}`. 
+2. To run locally, [install MongoDB](https://docs.mongodb.com/manual/installation/). We however are using a Heroku + mLab backend, which provides a `MONGODB_URI`, [check out the docs here](https://devcenter.heroku.com/articles/mongolab). We have a a functioning example of this API on Heroku, to which we can add devs/access as necessary. Either way, you will need to add `process.env` environmental variables for use with `app.js`. Create a `nodemon.json` file in the root directory and add variables as key value pairs: `{ env: { "KEY": "VALUE" }}`. 
 3. `npm start` and navigate to `http://localhost:3000/api/v0/nonprofits` or `http://localhost:3000/api/v0/evaluators`.
 
 ## About
