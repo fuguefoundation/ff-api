@@ -4,7 +4,7 @@ const morgan = require('morgan'); // Middleware for logging
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const classifierRoutes = require('./api/routes/classifiers');
+const evaluatorRoutes = require('./api/routes/evaluators');
 const nonprofitRoutes = require('./api/routes/nonprofits');
 const options = {
     autoIndex: false, // Don't build indexes
@@ -44,8 +44,8 @@ app.use((req, res, next) => {
 });
 
 //Routes that handle requests
-app.use('/classifiers', classifierRoutes);
-app.use('/nonprofits', nonprofitRoutes);
+app.use('/api/v0/evaluators', evaluatorRoutes);
+app.use('/api/v0/nonprofits', nonprofitRoutes);
 
 app.use((req, res, next) => {
 	const error = new Error('Not found');

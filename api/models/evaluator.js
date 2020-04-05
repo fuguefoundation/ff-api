@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const classifierSchema = mongoose.Schema({
+const evaluatorSchema = mongoose.Schema({
 	_id: mongoose.Schema.Types.ObjectId,
 	name: {type: String, required: true},
     url: {type: String, required: true},
@@ -10,4 +10,4 @@ const classifierSchema = mongoose.Schema({
 	short_desc: {type: String, required: true}
 });
 
-module.exports = mongoose.model('Classifer', classifierSchema);
+module.exports = mongoose.model('Evaluator', evaluatorSchema);

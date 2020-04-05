@@ -2,16 +2,16 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-const Classifier = require('../models/classifier');
+const Evaluator = require('../models/evaluator');
 
 router.get('/', (req, res, next) => {
-	Classifier.find()
+	Evaluator.find()
 	.select('name url image logo desc short_desc _id')
 	.exec()
 	.then(docs => {
 		const response = {
 			count: docs.length,
-			classifiers: docs.map(doc => {
+			evaluators: docs.map(doc => {
 				return {
 					name: doc.name,
 					url: doc.url,
@@ -22,7 +22,7 @@ router.get('/', (req, res, next) => {
 					_id: doc._id,
 					request: {
 						type: 'GET',
-						url: 'http://localhost:3000/classifiers/' + doc._id
+						url: 'api/v0/evaluators/' + doc._id
 					}
 				}
 			})
@@ -36,7 +36,7 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
 	console.log(req.file);
-	const classifier = new Classifier({
+	const evaluator = new Evaluator({
 		_id: new mongoose.Types.ObjectId(),
 		name: req.body.name,
 		url: req.body.url,
@@ -46,11 +46,11 @@ router.post('/', (req, res, next) => {
 		short_desc: req.body.short_desc,
 	});
 
-	classifier.save().then(result => {
+	evaluator.save().then(result => {
 		console.log(result);
 		res.status(201).json({
-			message: "New classifier created",
-			createdClassifier: {
+			message: "New evaluator created",
+			createdEvaluator: {
 				name: result.name,
 				url: result.url,
 				image: result.image,
@@ -60,7 +60,7 @@ router.post('/', (req, res, next) => {
 				_id: result._id,
 				request: {
 					type: 'GET',
-					url: 'http://localhost:3000/classifiers/' + result._id
+					url: '/api/v0/evaluators/' + result._id
 				}
 			}
 		});
@@ -72,19 +72,19 @@ router.post('/', (req, res, next) => {
 	});
 });
 
-router.get('/:classifierId', (req, res, next) => {
-	const id = req.params.classifierId;
-	Classifier.findById(id)
+router.get('/:evaluatorId', (req, res, next) => {
+	const id = req.params.evaluatorId;
+	Evaluator.findById(id)
 		.select('name type _id')
 		.exec()
 		.then(doc => {
 			if (doc){
 				res.status(200).json({
-					classifier: doc,
+					evaluator: doc,
 					request: {
 						type: 'GET',
-						description: 'Get all classifiers',
-						url: 'http://localhost:3000/classifiers'
+						description: 'Get all evaluators',
+						url: 'api/v0/evaluators'
 					}
 				});
 			} else {
@@ -96,18 +96,18 @@ router.get('/:classifierId', (req, res, next) => {
 	});
 });
 
-router.patch('/:classifierId', (req, res, next) => {
-	const id = req.params.classifierId;
+router.patch('/:evaluatorId', (req, res, next) => {
+	const id = req.params.evaluatorId;
 	const updateOps = {};
 	for (const ops of req.body){
 		updateOps[ops.propName] = ops.value;
 	}
-	Classifier.update({_id: id}, { $set: updateOps }).exec().then(result => {
+	Evaluator.update({_id: id}, { $set: updateOps }).exec().then(result => {
 		res.status(200).json({
-			message: 'Classifier updated',
+			message: 'Evaluator updated',
 			request: {
 				type: 'GET',
-				url: 'http://localhost:3000/classifiers/' + id
+				url: 'api/v0/evaluators/' + id
 			}
 		});
 	}).catch( err => {
@@ -116,16 +116,16 @@ router.patch('/:classifierId', (req, res, next) => {
 	});
 });
 
-router.delete('/:classifierId', (req, res, next) => {
-	const id = req.params.classifierId;
-	Classifier.remove({_id: id})
+router.delete('/:evaluatorId', (req, res, next) => {
+	const id = req.params.evaluatorId;
+	Evaluator.remove({_id: id})
 	.exec()
 	.then(result =>{
 		res.status(200).json({
-			message: 'Classifier deleted',
+			message: 'Evaluator deleted',
 			request: {
 				type: 'POST',
-				url: 'http://localhost:3000/classifiers',
+				url: 'api/v0/evaluators',
 				body: { name: 'String', type: 'String' }
 			}
 		});
