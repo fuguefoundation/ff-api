@@ -26,17 +26,18 @@ API [docs are here](https://fuguefoundation.org/docs/api-docs.html). Docs will b
 ```
     Schema({
         _id: mongoose.Schema.Types.ObjectId,
+        name: {type: String, required: true},
+        url: {type: String, required: true},
+        address: {tyep: String, required: true},
+        logo: {type: String, required: true},
+        image: {type: String, required: true},
+        short_desc: {type: String, required: true},
+        desc: {type: String, required: true},
         evaluator: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Evaluator',
             require: true
         },
-        name: {type: String, required: true},
-        url: {type: String, required: true},
-        image: {type: String, required: true},
-        logo: {type: String, required: true},
-        desc: {type: String, required: true},
-        short_desc: {type: String, required: true},
         stats: { 
             metric1: Number, 
             metric2: Number
@@ -51,13 +52,14 @@ API [docs are here](https://fuguefoundation.org/docs/api-docs.html). Docs will b
         _id: mongoose.Schema.Types.ObjectId,
         name: {type: String, required: true},
         url: {type: String, required: true},
-        image: {type: String, required: true},
         logo: {type: String, required: true},
-        desc: {type: String, required: true},
+        image: {type: String, required: true},
         short_desc: {type: String, required: true}
+        desc: {type: String, required: true},
     });
 ```
 
 ## Resources
 
+* [OpenAPI Specification](https://swagger.io/specification/)
 * Code is based off the Academind [Building a RESTful API with Node.js](https://www.youtube.com/playlist?list=PL55RiY5tL51q4D-B63KBnygU6opNPFk_q) series

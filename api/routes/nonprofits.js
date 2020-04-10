@@ -7,18 +7,24 @@ const Evaluator = require('../models/evaluator');
 
 router.get('/', (req, res, next) => {
 	Nonprofit.find()
-		.select('name stats evaluator _id')
-		.populate('evaluator', 'name')
+		.select('_id name url address logo image short_desc evaluatorId stats')
+		.populate('evaluatorId', 'name')
 		.exec()
 		.then(docs => {
 			const response = {
 				count: docs.length,
 				nonprofits: docs.map(doc => {
 					return {
-						name: doc.name,
-						stats: doc.stats,
-						evaluator: doc.evaluator,
 						_id: doc._id,
+                        name: doc.name,
+                        url: doc.url,
+                        address: doc.address,
+                        logo: doc.logo,
+                        image: doc.image,
+                        short_desc: doc.short_desc,
+                        desc: doc.desc,
+						evaluatorId: doc.evaluatorId,
+						stats: doc.stats,
 						request: {
 							type: 'GET',
 							url: 'api/v0/nonprofits/' + doc._id
@@ -34,28 +40,34 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-	//make sure evaluator exists
+    //make sure evaluator exists
+    console.log(req.body);
 	Evaluator.findById(req.body.evaluatorId)
-		.then(evaluator => {
-			if(!evaluator){
+		.then(evaluatorId => {
+			if(!evaluatorId){
 				return res.status(404).json({
 					message: "Evaluator not found. Check evaluator ID"
 				});
 			}
-			const Nonprofit = new Nonprofit({
+			const nonprofit = new Nonprofit({
 				_id: new mongoose.Types.ObjectId(),
-				name: req.body.name,
-				stats: req.body.stats,
-				evaluator: req.body.evaluatorId
+                name: req.body.name,
+                url: req.body.url,
+                address: req.body.address,
+                logo: req.body.logo,
+                image: req.body.image,
+                short_desc: req.body.short_desc,
+                desc: req.body.desc,
+				evaluatorId: req.body.evaluatorId,
+                stats: req.body.stats,
 			});
-			return discovery.save()
+			return nonprofit.save()
 		})
 		.then(result =>{
 			res.status(201).json({
 				message: "Nonprofit created",
-				createdDiscovery: {
-					name: result.name,
-					stats: result.stats,
+				createdNonprofit: {
+					name: result.name,                  
 					_id: result._id,
 					request: {
 						type: 'GET',
@@ -74,10 +86,10 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/:nonprofitId', (req, res, next) => {
-	const id = req.params.discoveryId;
+	const id = req.params.nonprofitId;
 	Nonprofit.findById(id)
-		.select('name stats evaluator _id')
-		.populate('evaluator')
+		.select('_id name url address logo image short_desc evaluatorId stats')
+		.populate('evaluatorId')
 		.exec()
 		.then(doc => {
 			if (doc){
@@ -119,7 +131,7 @@ router.patch('/:nonprofitId', (req, res, next) => {
 });
 
 router.delete('/:nonprofitId', (req, res, next) => {
-	const id = req.params.discoveryId;
+	const id = req.params.nonprofitId;
 	Nonprofit.remove({_id: id})
 	.exec()
 	.then(result =>{
@@ -128,7 +140,9 @@ router.delete('/:nonprofitId', (req, res, next) => {
 			request: {
 				type: 'POST',
 				url: 'api/v0/nonprofits',
-				body: { name: 'String', stats: 'Number', evaluatorId: 'ID' }
+				body: { name: 'String', url: 'String', address: 'String', image: 'String', 
+                logo: 'String', desc: 'String', short_desc: 'String', evaluatorId: 'String',
+                stats: {metric1: 'Number', metric2: 'Number'}}
 			}
 		});
 	}).catch(err =>{

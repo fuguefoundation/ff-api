@@ -6,20 +6,20 @@ const Evaluator = require('../models/evaluator');
 
 router.get('/', (req, res, next) => {
 	Evaluator.find()
-	.select('name url image logo desc short_desc _id')
+	.select('_id name url logo image desc short_desc')
 	.exec()
 	.then(docs => {
 		const response = {
 			count: docs.length,
 			evaluators: docs.map(doc => {
 				return {
+					_id: doc._id,
 					name: doc.name,
 					url: doc.url,
-					image: doc.image,
 					logo: doc.logo,
-					desc: doc.desc,
+					image: doc.image,
 					short_desc: doc.short_desc,
-					_id: doc._id,
+					desc: doc.desc,
 					request: {
 						type: 'GET',
 						url: 'api/v0/evaluators/' + doc._id
@@ -40,10 +40,10 @@ router.post('/', (req, res, next) => {
 		_id: new mongoose.Types.ObjectId(),
 		name: req.body.name,
 		url: req.body.url,
-		image: req.body.image,
 		logo: req.body.logo,
-		desc: req.body.desc,
+		image: req.body.image,
 		short_desc: req.body.short_desc,
+		desc: req.body.desc
 	});
 
 	evaluator.save().then(result => {
@@ -51,13 +51,8 @@ router.post('/', (req, res, next) => {
 		res.status(201).json({
 			message: "New evaluator created",
 			createdEvaluator: {
-				name: result.name,
-				url: result.url,
-				image: result.image,
-				logo: result.logo,
-				desc: result.desc,
-				short_desc: result.short_desc,
 				_id: result._id,
+				name: result.name,
 				request: {
 					type: 'GET',
 					url: '/api/v0/evaluators/' + result._id
@@ -75,7 +70,7 @@ router.post('/', (req, res, next) => {
 router.get('/:evaluatorId', (req, res, next) => {
 	const id = req.params.evaluatorId;
 	Evaluator.findById(id)
-		.select('name type _id')
+		.select('_id name url logo image short_desc desc')
 		.exec()
 		.then(doc => {
 			if (doc){
@@ -126,7 +121,8 @@ router.delete('/:evaluatorId', (req, res, next) => {
 			request: {
 				type: 'POST',
 				url: 'api/v0/evaluators',
-				body: { name: 'String', type: 'String' }
+                body: { name: 'String', url: 'String', image: 'String', 
+                logo: 'String', desc: 'String', short_desc: 'String'}
 			}
 		});
 	}).catch(err =>{
