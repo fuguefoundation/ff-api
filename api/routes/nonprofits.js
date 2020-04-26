@@ -7,7 +7,7 @@ const Evaluator = require('../models/evaluator');
 
 router.get('/', (req, res, next) => {
 	Nonprofit.find()
-		.select('_id name url address logo image short_desc evaluatorId stats')
+		.select('_id name url address logo image short_desc desc evaluatorId stats')
 		.populate('evaluatorId', 'name')
 		.exec()
 		.then(docs => {
@@ -88,7 +88,7 @@ router.post('/', (req, res, next) => {
 router.get('/:nonprofitId', (req, res, next) => {
 	const id = req.params.nonprofitId;
 	Nonprofit.findById(id)
-		.select('_id name url address logo image short_desc evaluatorId stats')
+		.select('_id name url address logo image short_desc desc evaluatorId stats')
 		.populate('evaluatorId')
 		.exec()
 		.then(doc => {
