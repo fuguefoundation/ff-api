@@ -6,7 +6,7 @@ const Evaluator = require('../models/evaluator');
 
 router.get('/', (req, res, next) => {
 	Evaluator.find()
-	.select('_id name url logo image desc short_desc')
+	.select('_id name url logo image focus short_desc desc')
 	.exec()
 	.then(docs => {
 		const response = {
@@ -17,7 +17,8 @@ router.get('/', (req, res, next) => {
 					name: doc.name,
 					url: doc.url,
 					logo: doc.logo,
-					image: doc.image,
+                    image: doc.image,
+                    focus: doc.focus,
 					short_desc: doc.short_desc,
 					desc: doc.desc,
 					request: {
@@ -41,7 +42,8 @@ router.post('/', (req, res, next) => {
 		name: req.body.name,
 		url: req.body.url,
 		logo: req.body.logo,
-		image: req.body.image,
+        image: req.body.image,
+        focus: req.body.focus,
 		short_desc: req.body.short_desc,
 		desc: req.body.desc
 	});
@@ -70,7 +72,7 @@ router.post('/', (req, res, next) => {
 router.get('/:evaluatorId', (req, res, next) => {
 	const id = req.params.evaluatorId;
 	Evaluator.findById(id)
-		.select('_id name url logo image short_desc desc')
+		.select('_id name url logo image focus short_desc desc')
 		.exec()
 		.then(doc => {
 			if (doc){
