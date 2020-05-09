@@ -140,9 +140,9 @@ router.delete('/:nonprofitId', (req, res, next) => {
 			request: {
 				type: 'POST',
 				url: 'api/v0/nonprofits',
-				body: { name: 'String', url: 'String', address: 'String', image: 'String', 
+				body: { name: 'String', url: 'String', address: 'String', url: 'String', image: 'String', 
                 logo: 'String', desc: 'String', short_desc: 'String', evaluatorId: 'String',
-                stats: {metric1: 'Number', metric2: 'Number'}}
+                stats: {metric1: 'String', metric2: 'Number'}}
 			}
 		});
 	}).catch(err =>{

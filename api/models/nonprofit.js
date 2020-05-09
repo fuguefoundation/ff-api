@@ -15,7 +15,7 @@ const nonprofitSchema = mongoose.Schema({
 	desc: {type: String, required: true},
 	short_desc: {type: String, required: true},
 	stats: { 
-        metric1: Number, 
+        metric1: String, 
         metric2: Number
     }
 });
