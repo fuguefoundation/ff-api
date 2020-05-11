@@ -7,13 +7,13 @@ const Evaluator = require('../models/evaluator');
 
 router.get('/', (req, res, next) => {
     Nonprofit.find()
-        .select('_id name url address logo image short_desc desc evaluatorId stats')
+        .select('id name url address logo image short_desc desc evaluatorId stats')
         .populate('evaluatorId', 'name')
         .exec()
         .then(docs => {
             const response = docs.map(doc => {
                 return {
-                    _id: doc._id,
+                    id: doc.id,
                     name: doc.name,
                     url: doc.url,
                     address: doc.address,
@@ -25,7 +25,7 @@ router.get('/', (req, res, next) => {
                     stats: doc.stats,
                     request: {
                         type: 'GET',
-                        url: 'api/v0/nonprofits/' + doc._id
+                        url: 'api/v0/nonprofits/' + doc.id
                     }
                 }
             });
@@ -49,7 +49,7 @@ router.post('/', (req, res, next) => {
                 });
             }
             const nonprofit = new Nonprofit({
-                _id: new mongoose.Types.ObjectId(),
+                id: new mongoose.Types.ObjectId(),
                 name: req.body.name,
                 url: req.body.url,
                 address: req.body.address,
@@ -67,10 +67,10 @@ router.post('/', (req, res, next) => {
                 message: "Nonprofit created",
                 createdNonprofit: {
                     name: result.name,
-                    _id: result._id,
+                    id: result.id,
                     request: {
                         type: 'GET',
-                        url: 'api/v0/nonprofits/' + result._id
+                        url: 'api/v0/nonprofits/' + result.id
                     }
                 }
             });
@@ -87,13 +87,13 @@ router.post('/', (req, res, next) => {
 router.get('/:nonprofitId', (req, res, next) => {
     const id = req.params.nonprofitId;
     Nonprofit.findById(id)
-        .select('_id name url address logo image short_desc desc evaluatorId stats')
+        .select('id name url address logo image short_desc desc evaluatorId stats')
         .populate('evaluatorId')
         .exec()
         .then(doc => {
             if (doc) {
                 const response = {
-                    _id: doc._id,
+                    id: doc.id,
                     name: doc.name,
                     url: doc.url,
                     address: doc.address,
@@ -129,7 +129,7 @@ router.patch('/:nonprofitId', (req, res, next) => {
         updateOps[ops.propName] = ops.value;
     }
     Nonprofit.update({
-        _id: id
+        id: id
     }, {
         $set: updateOps
     }).exec().then(result => {
@@ -151,7 +151,7 @@ router.patch('/:nonprofitId', (req, res, next) => {
 router.delete('/:nonprofitId', (req, res, next) => {
     const id = req.params.nonprofitId;
     Nonprofit.remove({
-            _id: id
+            id: id
         })
         .exec()
         .then(result => {

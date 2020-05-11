@@ -6,12 +6,12 @@ const Evaluator = require('../models/evaluator');
 
 router.get('/', (req, res, next) => {
     Evaluator.find()
-        .select('_id name url logo image focus short_desc desc')
+        .select('id name url logo image focus short_desc desc')
         .exec()
         .then(docs => {
             const response = docs.map(doc => {
                 return {
-                    _id: doc._id,
+                    id: doc.id,
                     name: doc.name,
                     url: doc.url,
                     logo: doc.logo,
@@ -21,7 +21,7 @@ router.get('/', (req, res, next) => {
                     desc: doc.desc,
                     request: {
                         type: 'GET',
-                        url: 'api/v0/evaluators/' + doc._id
+                        url: 'api/v0/evaluators/' + doc.id
                     }
                 }
             });
@@ -37,7 +37,7 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
     console.log(req.file);
     const evaluator = new Evaluator({
-        _id: new mongoose.Types.ObjectId(),
+        id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         url: req.body.url,
         logo: req.body.logo,
@@ -52,11 +52,11 @@ router.post('/', (req, res, next) => {
         res.status(201).json({
             message: "New evaluator created",
             createdEvaluator: {
-                _id: result._id,
+                id: result.id,
                 name: result.name,
                 request: {
                     type: 'GET',
-                    url: '/api/v0/evaluators/' + result._id
+                    url: '/api/v0/evaluators/' + result.id
                 }
             }
         });
@@ -71,12 +71,12 @@ router.post('/', (req, res, next) => {
 router.get('/:evaluatorId', (req, res, next) => {
     const id = req.params.evaluatorId;
     Evaluator.findById(id)
-        .select('_id name url logo image focus short_desc desc')
+        .select('id name url logo image focus short_desc desc')
         .exec()
         .then(doc => {
             if (doc) {
                 const response = {
-                    _id: doc._id,
+                    id: doc.id,
                     name: doc.name,
                     url: doc.url,
                     logo: doc.logo,
@@ -110,7 +110,7 @@ router.patch('/:evaluatorId', (req, res, next) => {
         updateOps[ops.propName] = ops.value;
     }
     Evaluator.update({
-        _id: id
+        id: id
     }, {
         $set: updateOps
     }).exec().then(result => {
@@ -132,7 +132,7 @@ router.patch('/:evaluatorId', (req, res, next) => {
 router.delete('/:evaluatorId', (req, res, next) => {
     const id = req.params.evaluatorId;
     Evaluator.remove({
-            _id: id
+            id: id
         })
         .exec()
         .then(result => {
