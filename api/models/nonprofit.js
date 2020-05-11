@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const nonprofitSchema = mongoose.Schema({
-	_id: mongoose.Schema.Types.ObjectId,
+	id: mongoose.Schema.Types.ObjectId,
 	evaluatorId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Evaluator',
