@@ -9,9 +9,7 @@ router.get('/', (req, res, next) => {
 	.select('_id name url logo image focus short_desc desc')
 	.exec()
 	.then(docs => {
-		const response = {
-			count: docs.length,
-			evaluators: docs.map(doc => {
+		const response = docs.map(doc => {
 				return {
 					_id: doc._id,
 					name: doc.name,
@@ -26,8 +24,7 @@ router.get('/', (req, res, next) => {
 						url: 'api/v0/evaluators/' + doc._id
 					}
 				}
-			})
-		}
+			});
 		res.status(200).json(response);
 	}).catch(err => {
 		console.log(err);
@@ -77,7 +74,7 @@ router.get('/:evaluatorId', (req, res, next) => {
 		.then(doc => {
 			if (doc){
 				res.status(200).json({
-					evaluator: doc,
+					doc,
 					request: {
 						type: 'GET',
 						description: 'Get all evaluators',

@@ -29,27 +29,6 @@ router.get('/', (req, res, next) => {
 						}
 					}
 				});
-			// const response = {
-			// 	count: docs.length,
-			// 	nonprofits: docs.map(doc => {
-			// 		return {
-			// 			_id: doc._id,
-            //             name: doc.name,
-            //             url: doc.url,
-            //             address: doc.address,
-            //             logo: doc.logo,
-            //             image: doc.image,
-            //             short_desc: doc.short_desc,
-            //             desc: doc.desc,
-			// 			evaluatorId: doc.evaluatorId,
-			// 			stats: doc.stats,
-			// 			request: {
-			// 				type: 'GET',
-			// 				url: 'api/v0/nonprofits/' + doc._id
-			// 			}
-			// 		}
-			// 	})
-			// }
 			res.status(200).json(response);
 		}).catch(err => {
 			console.log(err);
@@ -112,7 +91,7 @@ router.get('/:nonprofitId', (req, res, next) => {
 		.then(doc => {
 			if (doc){
 				res.status(200).json({
-					nonprofit: doc,
+					doc,
 					request: {
 						type: 'GET',
 						description: 'Get all nonprofits',
