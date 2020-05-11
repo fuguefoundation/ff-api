@@ -11,7 +11,7 @@ router.get('/', (req, res, next) => {
 		.populate('evaluatorId', 'name')
 		.exec()
 		.then(docs => {
-			const response = [ docs.map(doc => {
+			const response = docs.map(doc => {
 					return {
 						_id: doc._id,
                         name: doc.name,
@@ -28,8 +28,7 @@ router.get('/', (req, res, next) => {
 							url: 'api/v0/nonprofits/' + doc._id
 						}
 					}
-				})
-            ]
+				});
 			// const response = {
 			// 	count: docs.length,
 			// 	nonprofits: docs.map(doc => {
