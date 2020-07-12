@@ -6,13 +6,14 @@ const Givewell = require('../models/givewell');
 
 router.get('/', (req, res, next) => {
     Givewell.find()
-        .select('evaluator title title_program short_desc desc info donate_fiat last_update')
+        .select('evaluator image title title_program short_desc desc info donate_fiat last_update')
         .exec()
         .then(docs => {
             const response = docs.map(doc => {
                 return {
                     id: doc.id,
                     evaluator: doc.evaluator,
+                    image: doc.image,
                     title: doc.title,
                     title_program: doc.title_program,
                     short_desc: doc.short_desc,
@@ -40,6 +41,7 @@ router.post('/', (req, res, next) => {
     const givewell = new Givewell({
         id: new mongoose.Types.ObjectId(),
         evaluator: req.body.evaluator,
+        image: req.body.image,
         title: req.body.title,
         title_program: req.body.title_program,
         short_desc: req.body.short_desc,
@@ -52,7 +54,7 @@ router.post('/', (req, res, next) => {
     givewell.save().then(result => {
         console.log(result);
         res.status(201).json({
-            message: "New givewell created",
+            message: "New Givewell object created",
             createdGivewell: {
                 id: result.id,
                 title: result.title,
@@ -73,13 +75,14 @@ router.post('/', (req, res, next) => {
 router.get('/:givewellId', (req, res, next) => {
     const id = req.params.givewellId;
     Givewell.findById(id)
-        .select('evaluator title title_program short_desc desc info donate_fiat last_update')
+        .select('evaluator image title title_program short_desc desc info donate_fiat last_update')
         .exec()
         .then(doc => {
             if (doc) {
                 const response = {
                     id: doc.id,
                     evaluator: doc.evaluator,
+                    image: doc.image,
                     title: doc.title,
                     title_program: doc.title_program,
                     short_desc: doc.short_desc,
@@ -146,6 +149,7 @@ router.delete('/:givewellId', (req, res, next) => {
                     url: 'api/v0/givewell',
                     body: {
                         evaluator: 'String',
+                        image: 'String',
                         title: 'String',
                         title_program: 'String',
                         short_desc: 'String',
