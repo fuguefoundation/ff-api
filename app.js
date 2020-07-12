@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 const evaluatorRoutes = require('./api/routes/evaluators');
 const nonprofitRoutes = require('./api/routes/nonprofits');
+const givewellRoutes = require('./api/routes/givewell-route');
 const options = {
     autoIndex: false, // Don't build indexes
     // reconnectTries: 30, // Retry up to 30 times
@@ -46,6 +47,7 @@ app.use((req, res, next) => {
 //Routes that handle requests
 app.use('/api/v0/evaluators', evaluatorRoutes);
 app.use('/api/v0/nonprofits', nonprofitRoutes);
+app.use('/api/v0/givewell', givewellRoutes);
 
 app.use((req, res, next) => {
 	const error = new Error('Not found');

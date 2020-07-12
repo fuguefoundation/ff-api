@@ -1,3 +1,5 @@
+![GitHub](https://img.shields.io/github/license/fuguefoundation/ff-dapp)
+
 <p align="center">
   <img src="https://github.com/fuguefoundation/dapp-nonprofit/blob/master/src/assets/images/logo_150.png">
 </p>
@@ -6,7 +8,7 @@
 
 1. Clone repo and run `npm install`
 2. To run locally, [install MongoDB](https://docs.mongodb.com/manual/installation/). We however are using a Heroku + mLab backend, which provides a `MONGODB_URI`, [check out the docs here](https://devcenter.heroku.com/articles/mongolab). We have a a functioning example of this API on Heroku, to which we can add devs/access as necessary. Either way, you will need to add `process.env` environmental variables for use with `app.js`. Create a `nodemon.json` file in the root directory and add variables as key value pairs: `{ env: { "KEY": "VALUE" }}`. 
-3. `npm start` and navigate to `http://localhost:3000/api/v0/nonprofits` or `http://localhost:3000/api/v0/evaluators`.
+3. `npm start` and navigate to appropriate route (e.g., `http://localhost:3000/api/v0/nonprofits`).
 
 ## About
 
@@ -19,45 +21,13 @@ This API intends to promote the principles of [effective altruism](https://www.e
   <img src="https://github.com/fuguefoundation/ff-dapp/blob/master/src/assets/images/ff-dapp-flow.jpg">
 </p>
 
-API [docs are here](https://fuguefoundation.org/docs/api-docs.html). Docs will be updated regularly as the data structures and schema are developed. The basic concept is to have a `nonprofit` object and an `evaluator` object.
+## Docs
 
-### Nonprofit
+API [docs are here](https://fuguefoundation.org/docs/api-docs.html). This API is under active development, and docs will be updated regularly as the data structures and schema continue to develop. The basic concept is to enable a `evaluator` object and its corresponding `nonprofit` objects.
 
-```
-    Schema({
-        _id: mongoose.Schema.Types.ObjectId,
-        name: {type: String, required: true},
-        url: {type: String, required: true},
-        address: {tyep: String, required: true},
-        logo: {type: String, required: true},
-        image: {type: String, required: true},
-        short_desc: {type: String, required: true},
-        desc: {type: String, required: true},
-        evaluator: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Evaluator',
-            require: true
-        },
-        stats: { 
-            metric1: Number, 
-            metric2: Number
-        }
-    });
-```
+## Contributing to the project
 
-### Evaluator
-
-```
-    Schema({
-        _id: mongoose.Schema.Types.ObjectId,
-        name: {type: String, required: true},
-        url: {type: String, required: true},
-        logo: {type: String, required: true},
-        image: {type: String, required: true},
-        short_desc: {type: String, required: true}
-        desc: {type: String, required: true},
-    });
-```
+This is an open source project. Contributions are welcomed & encouraged! :smile: If you'd like to improve the code base, please see [Contributing Guidelines](https://github.com/fuguefoundation/ff-api/blob/master/.github/CONTRIBUTING.md).
 
 ## Resources
 
