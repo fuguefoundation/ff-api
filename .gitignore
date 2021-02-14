@@ -44,6 +44,7 @@ testem.log
 /typings
 package-lock.json
 nodemon.json
+notes.md
 
 # System Files
 .DS_Store
