@@ -6,12 +6,13 @@ const NFT = require('../models/nft');
 
 router.get('/', (req, res, next) => {
     NFT.find()
-        .select('id name description image external_url animation_url youtube_url background_color attributes')
+        .select('id tokenID name description image external_url animation_url youtube_url background_color attributes')
         .exec()
         .then(docs => {
             const response = docs.map(doc => {
                 return {
                     id: doc.id,
+                    tokenID: doc.tokenID,
                     name: doc.name,
                     description: doc.description,
                     image: doc.image,
@@ -38,7 +39,8 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
     console.log(req.file);
     const nft = new NFT({
-        id: req.body._id,
+        id: new mongoose.Types.ObjectId(),
+        tokenID: req.body.tokenID,
         name: req.body.name,
         description: req.body.description,
         image: req.body.image,
@@ -73,12 +75,13 @@ router.post('/', (req, res, next) => {
 router.get('/:nftId', (req, res, next) => {
     const id = req.params.nftId;
     NFT.findById(id)
-        .select('id name description image external_url animation_url youtube_url background_color attributes')
+        .select('id tokenID name description image external_url animation_url youtube_url background_color attributes')
         .exec()
         .then(doc => {
             if (doc) {
                 const response = {
                     id: doc.id,
+                    tokenID: doc.tokenID,
                     name: doc.name,
                     description: doc.description,
                     image: doc.image,
