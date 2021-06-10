@@ -49,7 +49,7 @@ router.post('/', (req, res, next) => {
                 });
             }
             const nonprofit = new Nonprofit({
-                id: new mongoose.Types.ObjectId(),
+                _id: new mongoose.Types.ObjectId(),
                 name: req.body.name,
                 url: req.body.url,
                 address: req.body.address,

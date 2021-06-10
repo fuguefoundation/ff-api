@@ -39,7 +39,7 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
     console.log(req.file);
     const tlycs = new TLYCS({
-        id: new mongoose.Types.ObjectId(),
+        _id: new mongoose.Types.ObjectId(),
         evaluator: req.body.evaluator,
         image: req.body.image,
         title: req.body.title,

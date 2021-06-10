@@ -11,7 +11,8 @@ const nftSchema = mongoose.Schema({
     youtube_url: {type: String},
     background_color: {type: String},
 	attributes: [
-        { 
+        {
+            _id : false,
             trait_type: {type: String}, 
             value: {type: String},
             display_type: {type: String}

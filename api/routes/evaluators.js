@@ -37,7 +37,7 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
     console.log(req.file);
     const evaluator = new Evaluator({
-        id: new mongoose.Types.ObjectId(),
+        _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         url: req.body.url,
         logo: req.body.logo,
