@@ -45,6 +45,7 @@ testem.log
 package-lock.json
 nodemon.json
 notes.md
+api/models/data.json
 
 # System Files
 .DS_Store

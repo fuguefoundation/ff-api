@@ -38,7 +38,7 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
     console.log(req.file);
     const nft = new NFT({
-        id: new mongoose.Types.ObjectId(),
+        id: req.body._id,
         name: req.body.name,
         description: req.body.description,
         image: req.body.image,

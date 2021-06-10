@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const nftSchema = mongoose.Schema({
-	_id: mongoose.Schema.Types.ObjectId,
+	_id: {type: Number, required: true},
 	name: {type: String, required: true},
     description: {type: String, required: true},
 	image: {type: String, required: true},
