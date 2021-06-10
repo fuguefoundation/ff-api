@@ -1,12 +1,13 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan'); // Middleware for logging
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const evaluatorRoutes = require('./api/routes/evaluators');
 const nonprofitRoutes = require('./api/routes/nonprofits');
-const givewellRoutes = require('./api/routes/givewell-route');
+const tlycsRoutes = require('./api/routes/tlycs-route');
+const nftRoutes = require('./api/routes/nfts');
 const options = {
     autoIndex: false, // Don't build indexes
     // reconnectTries: 30, // Retry up to 30 times
@@ -27,8 +28,11 @@ mongoose.connect(process.env.MONGODB_URI,
     });
 
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+/**** body-parser is deprecated ****/
+// app.use(bodyParser.urlencoded({extended: false}));
+// app.use(bodyParser.json());
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
 
 //CORS
 app.use((req, res, next) => {
@@ -47,7 +51,8 @@ app.use((req, res, next) => {
 //Routes that handle requests
 app.use('/api/v0/evaluators', evaluatorRoutes);
 app.use('/api/v0/nonprofits', nonprofitRoutes);
-app.use('/api/v0/givewell', givewellRoutes);
+app.use('/api/v0/tlycs', tlycsRoutes);
+app.use('/api/v0/nfts', nftRoutes);
 
 app.use((req, res, next) => {
 	const error = new Error('Not found');

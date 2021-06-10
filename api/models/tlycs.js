@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const givewellSchema = mongoose.Schema({
+const tlycsSchema = mongoose.Schema({
 	_id: mongoose.Schema.Types.ObjectId,
     evaluator: {type: String, required: true},
 	image: {type: String, required: true},
@@ -13,4 +13,4 @@ const givewellSchema = mongoose.Schema({
     last_update: {type: String, required: true}
 });
 
-module.exports = mongoose.model('Givewell', givewellSchema);
+module.exports = mongoose.model('TLYCS', tlycsSchema);

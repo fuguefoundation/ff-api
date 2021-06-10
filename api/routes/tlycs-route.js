@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-const Givewell = require('../models/givewell');
+const TLYCS = require('../models/tlycs');
 
 router.get('/', (req, res, next) => {
-    Givewell.find()
+    TLYCS.find()
         .select('evaluator image title title_program short_desc desc info donate_fiat last_update')
         .exec()
         .then(docs => {
@@ -23,7 +23,7 @@ router.get('/', (req, res, next) => {
                     last_update: doc.last_update,
                     request: {
                         type: 'GET',
-                        url: 'api/v0/givewell/' + doc.id
+                        url: 'api/v0/tlycs/' + doc.id
                     }
                 }
             });
@@ -38,7 +38,7 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
     console.log(req.file);
-    const givewell = new Givewell({
+    const tlycs = new TLYCS({
         id: new mongoose.Types.ObjectId(),
         evaluator: req.body.evaluator,
         image: req.body.image,
@@ -51,16 +51,16 @@ router.post('/', (req, res, next) => {
         last_update: req.body.last_update      
     });
 
-    givewell.save().then(result => {
+    tlycs.save().then(result => {
         console.log(result);
         res.status(201).json({
-            message: "New Givewell object created",
+            message: "New TLYCS object created",
             createdGivewell: {
                 id: result.id,
                 title: result.title,
                 request: {
                     type: 'GET',
-                    url: '/api/v0/givewell/' + result.id
+                    url: '/api/v0/tlycs/' + result.id
                 }
             }
         });
@@ -72,9 +72,9 @@ router.post('/', (req, res, next) => {
     });
 });
 
-router.get('/:givewellId', (req, res, next) => {
-    const id = req.params.givewellId;
-    Givewell.findById(id)
+router.get('/:tlycsId', (req, res, next) => {
+    const id = req.params.tlycsId;
+    TLYCS.findById(id)
         .select('evaluator image title title_program short_desc desc info donate_fiat last_update')
         .exec()
         .then(doc => {
@@ -92,7 +92,7 @@ router.get('/:givewellId', (req, res, next) => {
                     last_update: doc.last_update,
                     request: {
                         type: 'GET',
-                        url: 'api/v0/givewell/' + doc.id
+                        url: 'api/v0/tlycs/' + doc.id
                     }
                 };
                 res.status(200).json(response);
@@ -109,22 +109,22 @@ router.get('/:givewellId', (req, res, next) => {
         });
 });
 
-router.patch('/:givewellId', (req, res, next) => {
-    const id = req.params.givewellId;
+router.patch('/:tlycsId', (req, res, next) => {
+    const id = req.params.tlycsId;
     const updateOps = {};
     for (const ops of req.body) {
         updateOps[ops.propName] = ops.value;
     }
-    Givewell.update({
+    TLYCS.update({
         id: id
     }, {
         $set: updateOps
     }).exec().then(result => {
         res.status(200).json({
-            message: 'Givewell updated',
+            message: 'TLYCS updated',
             request: {
                 type: 'GET',
-                url: 'api/v0/givewell/' + id
+                url: 'api/v0/tlycs/' + id
             }
         });
     }).catch(err => {
@@ -135,18 +135,18 @@ router.patch('/:givewellId', (req, res, next) => {
     });
 });
 
-router.delete('/:givewellId', (req, res, next) => {
-    const id = req.params.givewellId;
-    Givewell.remove({
+router.delete('/:tlycsId', (req, res, next) => {
+    const id = req.params.tlycsId;
+    TLYCS.remove({
             id: id
         })
         .exec()
         .then(result => {
             res.status(200).json({
-                message: 'Givewell deleted',
+                message: 'TLYCS deleted',
                 request: {
                     type: 'POST',
-                    url: 'api/v0/givewell',
+                    url: 'api/v0/tlycs',
                     body: {
                         evaluator: 'String',
                         image: 'String',
