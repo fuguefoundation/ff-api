@@ -72,24 +72,24 @@ router.post('/', (req, res, next) => {
     });
 });
 
-router.get('/:nftId', (req, res, next) => {
-    const id = req.params.nftId;
-    NFT.findById(id)
-        .select('id tokenID name description image external_url animation_url youtube_url background_color attributes')
+router.get('/:tokenID', (req, res, next) => {
+    const id = req.params.tokenID;
+    NFT.find({tokenID: id}, 
+        'id tokenID name description image external_url animation_url youtube_url background_color attributes')
         .exec()
         .then(doc => {
             if (doc) {
                 const response = {
-                    id: doc.id,
-                    tokenID: doc.tokenID,
-                    name: doc.name,
-                    description: doc.description,
-                    image: doc.image,
-                    external_url: doc.external_url,
-                    animation_url: doc.animation_url,
-                    youtube_url: doc.youtube_url,
-                    background_color: doc.background_color,
-                    attributes: doc.attributes,
+                    id: doc[0].id,
+                    tokenID: doc[0].tokenID,
+                    name: doc[0].name,
+                    description: doc[0].description,
+                    image: doc[0].image,
+                    external_url: doc[0].external_url,
+                    animation_url: doc[0].animation_url,
+                    youtube_url: doc[0].youtube_url,
+                    background_color: doc[0].background_color,
+                    attributes: doc[0].attributes,
                     request: {
                         type: 'GET',
                         url: 'api/v0/nfts'
