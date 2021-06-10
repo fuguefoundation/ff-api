@@ -137,7 +137,7 @@ router.patch('/:nftId', (req, res, next) => {
 
 router.delete('/:nftId', (req, res, next) => {
     const id = req.params.nftId;
-    NFT.remove({
+    NFT.deleteOne({
             id: id
         })
         .exec()

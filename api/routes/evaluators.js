@@ -131,7 +131,7 @@ router.patch('/:evaluatorId', (req, res, next) => {
 
 router.delete('/:evaluatorId', (req, res, next) => {
     const id = req.params.evaluatorId;
-    Evaluator.remove({
+    Evaluator.deleteOne({
             id: id
         })
         .exec()

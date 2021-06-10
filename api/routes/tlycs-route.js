@@ -137,7 +137,7 @@ router.patch('/:tlycsId', (req, res, next) => {
 
 router.delete('/:tlycsId', (req, res, next) => {
     const id = req.params.tlycsId;
-    TLYCS.remove({
+    TLYCS.deleteOne({
             id: id
         })
         .exec()

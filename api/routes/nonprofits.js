@@ -150,7 +150,7 @@ router.patch('/:nonprofitId', (req, res, next) => {
 
 router.delete('/:nonprofitId', (req, res, next) => {
     const id = req.params.nonprofitId;
-    Nonprofit.remove({
+    Nonprofit.deleteOne({
             id: id
         })
         .exec()

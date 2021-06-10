@@ -52,7 +52,7 @@ app.use((req, res, next) => {
 app.use('/api/v0/evaluators', evaluatorRoutes);
 app.use('/api/v0/nonprofits', nonprofitRoutes);
 app.use('/api/v0/tlycs', tlycsRoutes);
-app.use('/api/v0/nfts', nftRoutes);
+app.use('/api/v0/nft', nftRoutes);
 
 app.use((req, res, next) => {
 	const error = new Error('Not found');
