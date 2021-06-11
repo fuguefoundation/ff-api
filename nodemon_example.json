@@ -1,0 +1,11 @@
+{
+	"env" : {
+        "MONGO_ATLAS_PW": "",
+        "MONGO_MISC": "",
+        "HEROKU_USERNAME": "",
+        "HEROKU_KEY": "",
+        "MLAB_ADDRESS_PORT": "",
+        "MONGODB_URI_OLD": "",
+        "MONGODB_URI": ""
+	}
+}

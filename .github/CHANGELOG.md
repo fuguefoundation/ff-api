@@ -5,3 +5,8 @@
 * Updated package.json to latest versions
 * Minor edits to other routes, to include issues with `_id` and deprecated functions
 * Updates to README for clarity
+
+## 20210611
+
+* Updates to README for clarity
+* Created `nodemon_example` JSON file for env variables
