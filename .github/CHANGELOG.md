@@ -1,3 +1,7 @@
+## 20220826
+
+* Bump Mongoose to 5.13.15
+
 ## 20210610
 
 * Added NFT schema for use with Rinkeby and Open Sea
